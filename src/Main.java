@@ -4,15 +4,12 @@ public class Main {
 	
 	public static void main(String[] args){
 		
-		BinarySearchTree tree = new BinarySearchTree();
+		RedBlackTree tree = new RedBlackTree();
+		tree.add(10);
+		tree.add(12);
 		tree.add(5);
 		tree.add(2);
-		tree.add(11);
-		tree.add(3);
-		tree.add(10);
-		tree.add(11);
-		tree.add(-2);
-		tree.add(0);
+		tree.add(6);
 		
 		System.out.println("The tree depth is: " + tree.depth());
 		System.out.println("The num leafs is: " + tree.numLeafs());
@@ -21,9 +18,8 @@ public class Main {
 		ArrayList<Object> orderedList = tree.inOrderTraversal();
 		System.out.println("Ordered list: " + orderedList.toString());
 		
-		
-
-		
+		tree.left.rotateRight();
+		System.out.println(tree.inOrderTraversal().toString());
 		
 	}
 }

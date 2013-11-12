@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /* 
  * Properties: 
  *  1. A node is either red or black.
@@ -59,16 +61,44 @@
  *  
  *   
  */
-public class RedBlackTree extends BinarySearchTree {
+public class RedBlackTree {
 
-	public final static String COLOR_BLACK = "black";
-	public final static String COLOR_RED = "red";
+    public final static String COLOR_BLACK = "black";
+    public final static String COLOR_RED = "red";
 
-	// Must equal COLOR_BLACK or COLOR_RED
-	private String color;
-	
-	public RedBlackTree() {
-		super();
-	} 
-	
+    public final static String SIDE_LEFT = "left";
+    public final static String SIDE_RIGHT = "right";
+
+    private RBNode root;
+
+    public void add(Object data) {
+        if (this.isEmpty()) {
+            this.root = new RBNode(data, null, null, COLOR_BLACK, null);
+        } else {
+            RBNode node = root;
+            boolean finished = false;
+            while (!finished) {
+                if (node.compareTo(data) > 0) {
+                    if (node.left == null) {
+                        node.left = new RBNode(data, null, null, COLOR_RED, SIDE_LEFT);
+                        finished = true;
+                    } else {
+                        node = node.left;
+                    }
+                } else {
+                    if (node.right == null) {
+                        node.right = new RBNode(data, null, null, COLOR_RED, SIDE_RIGHT);
+                        finished = true;
+                    } else {
+                        node = node.right;
+                    }
+                }
+            }
+        }
+    }
+
+    private boolean isEmpty() {
+        return (this.root == null);
+    }
+
 }

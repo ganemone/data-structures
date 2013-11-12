@@ -3,17 +3,21 @@ import java.util.ArrayList;
 
 public class BinaryTree {
 
+	public final static String SIDE_LEFT = "left";
+	public final static String SIDE_RIGHT = "right";
+	
 	protected Object data;
 	protected BinaryTree left;
 	protected BinaryTree right;
 	protected BinaryTree parent;
 	protected String side;
 	
-	public BinaryTree(BinaryTree parent) {
+	public BinaryTree(BinaryTree parent, String side) {
 		this.data = null;
 		this.left = null;
 		this.right = null;
 		this.parent = parent;
+		this.side = side;
 	}
 	
 	public BinaryTree getLeftTree() { return this.left; }
@@ -23,8 +27,8 @@ public class BinaryTree {
 	public void add(Object data) {
 		if(this.isEmpty()) {
 			this.data = data;
-			this.left = new BinaryTree(this);
-			this.right = new BinaryTree(this);
+			this.left = new BinaryTree(this, BinaryTree.SIDE_LEFT);
+			this.right = new BinaryTree(this, BinaryTree.SIDE_RIGHT);
 		}
 		else if(this.left.depth() <= this.right.depth()) {
 			this.left.add(data);	
@@ -89,6 +93,13 @@ public class BinaryTree {
 			return list;
 		}
 		else {
+			if(this.parent != null) {
+				System.out.println("Item: " + this.data);
+				System.out.println("Parent: " + this.parent.data);
+				System.out.println("Side: " + this.side);
+			} else {
+				System.out.println("Root: " + this.data);
+			}
 			list.addAll(this.left.inOrderTraversal());
 			list.add(this.data);
 			list.addAll(this.right.inOrderTraversal());
@@ -117,6 +128,36 @@ public class BinaryTree {
 	
 	public BinaryTree getParent() {
 		return this.parent;
+	}
+	
+	public void rotateRight() {
+		
+		BinaryTree oldParent = this.parent;
+		BinaryTree oldRight = this.right;
+		BinaryTree oldParentParent = oldParent.parent;
+		
+		this.right = oldParent;
+		this.parent = oldParentParent;
+		this.side = oldParent.side;
+		
+		if(this.parent != null) {
+			if(this.side == BinaryTree.SIDE_LEFT) {
+				this.parent.left = this;
+			}
+			else if(this.side == BinaryTree.SIDE_RIGHT) {
+				this.parent.right = this;
+			}
+		}
+		
+		oldParent.left = oldRight;
+		oldParent.parent = this;
+		oldParent.side = BinaryTree.SIDE_RIGHT;
+		oldParent.left.side = BinaryTree.SIDE_LEFT;
+		
+	}
+	
+	public void rotateLeft() {
+		
 	}
 	
 }
