@@ -2,7 +2,7 @@
 public class BinarySearchTree extends BinaryTree {
 
 	public BinarySearchTree() {
-		super();
+		super(null);
 	}
 	
 	@Override

@@ -6,11 +6,14 @@ public class BinaryTree {
 	protected Object data;
 	protected BinaryTree left;
 	protected BinaryTree right;
+	protected BinaryTree parent;
+	protected String side;
 	
-	public BinaryTree() {
+	public BinaryTree(BinaryTree parent) {
 		this.data = null;
 		this.left = null;
 		this.right = null;
+		this.parent = parent;
 	}
 	
 	public BinaryTree getLeftTree() { return this.left; }
@@ -20,8 +23,8 @@ public class BinaryTree {
 	public void add(Object data) {
 		if(this.isEmpty()) {
 			this.data = data;
-			this.left = new BinaryTree();
-			this.right = new BinaryTree();
+			this.left = new BinaryTree(this);
+			this.right = new BinaryTree(this);
 		}
 		else if(this.left.depth() <= this.right.depth()) {
 			this.left.add(data);	
@@ -110,6 +113,10 @@ public class BinaryTree {
 		ArrayList<Object> list = new ArrayList<Object>();
 		
 		return list;
+	}
+	
+	public BinaryTree getParent() {
+		return this.parent;
 	}
 	
 }
