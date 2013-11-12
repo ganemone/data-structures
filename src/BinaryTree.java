@@ -130,34 +130,4 @@ public class BinaryTree {
 		return this.parent;
 	}
 	
-	public void rotateRight() {
-		
-		BinaryTree oldParent = this.parent;
-		BinaryTree oldRight = this.right;
-		BinaryTree oldParentParent = oldParent.parent;
-		
-		this.right = oldParent;
-		this.parent = oldParentParent;
-		this.side = oldParent.side;
-		
-		if(this.parent != null) {
-			if(this.side == BinaryTree.SIDE_LEFT) {
-				this.parent.left = this;
-			}
-			else if(this.side == BinaryTree.SIDE_RIGHT) {
-				this.parent.right = this;
-			}
-		}
-		
-		oldParent.left = oldRight;
-		oldParent.parent = this;
-		oldParent.side = BinaryTree.SIDE_RIGHT;
-		oldParent.left.side = BinaryTree.SIDE_LEFT;
-		
-	}
-	
-	public void rotateLeft() {
-		
-	}
-	
 }

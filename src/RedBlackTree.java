@@ -73,21 +73,21 @@ public class RedBlackTree {
 
     public void add(Object data) {
         if (this.isEmpty()) {
-            this.root = new RBNode(data, null, null, COLOR_BLACK, null);
+            this.root = new RBNode(data, null, null, null, COLOR_BLACK, null);
         } else {
             RBNode node = root;
             boolean finished = false;
             while (!finished) {
                 if (node.compareTo(data) > 0) {
                     if (node.left == null) {
-                        node.left = new RBNode(data, null, null, COLOR_RED, SIDE_LEFT);
+                        node.left = new RBNode(data, node, null, null, COLOR_RED, SIDE_LEFT);
                         finished = true;
                     } else {
                         node = node.left;
                     }
                 } else {
                     if (node.right == null) {
-                        node.right = new RBNode(data, null, null, COLOR_RED, SIDE_RIGHT);
+                        node.right = new RBNode(data, node, null, null, COLOR_RED, SIDE_RIGHT);
                         finished = true;
                     } else {
                         node = node.right;
@@ -100,5 +100,9 @@ public class RedBlackTree {
     private boolean isEmpty() {
         return (this.root == null);
     }
-
+    
+    public void printTree() {
+        this.root.printNodes();
+    }
+    
 }

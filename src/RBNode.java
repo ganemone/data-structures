@@ -6,8 +6,9 @@ public class RBNode implements Comparable {
 	public RBNode right;
 	private String color;
 	private String side;
+	private RBNode parent;
 	
-	public RBNode(Object data, RBNode left, RBNode right, String color, String side) {
+	public RBNode(Object data, RBNode parent, RBNode left, RBNode right, String color, String side) {
 		this.data = data;
 		this.left = left;
 		this.right = right;
@@ -45,4 +46,45 @@ public class RBNode implements Comparable {
 		return (this.data == null);
 	}
 	
+	public void printNodes() {
+	    if(this.left != null) {
+	        this.left.printNodes();
+	    }
+	    
+	    System.out.println(this.data);
+	    
+	    if(this.right != null) {
+	        this.right.printNodes();
+	    }
+	}
+	
+    public void rotateRight() {
+        
+        RBNode oldParent = this.parent;
+        RBNode oldRight = this.right;
+        RBNode oldParentParent = oldParent.parent;
+        
+        this.right = oldParent;
+        this.parent = oldParentParent;
+        this.side = oldParent.side;
+        
+        if(this.parent != null) {
+            if(this.side == BinaryTree.SIDE_LEFT) {
+                this.parent.left = this;
+            }
+            else if(this.side == BinaryTree.SIDE_RIGHT) {
+                this.parent.right = this;
+            }
+        }
+        
+        oldParent.left = oldRight;
+        oldParent.parent = this;
+        oldParent.side = BinaryTree.SIDE_RIGHT;
+        oldParent.left.side = BinaryTree.SIDE_LEFT;
+        
+    }
+    
+    public void rotateLeft() {
+        
+    }
 }
