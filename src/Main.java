@@ -6,13 +6,14 @@ public class Main {
 		RedBlackTree tree = new RedBlackTree();
 		tree.add(10);
 		tree.add(12);
-		tree.add(5);
+		tree.add(15);
+		tree.add(11);
 		tree.add(2);
-		tree.add(6);
 		
 		tree.printTreePreOrder();
 		
-		tree.rotateRightTest();
+		tree.root = tree.rotateLeft(tree.root);
+		
 		System.out.println("-----Rotated------");
 		
 		tree.printTreePreOrder();

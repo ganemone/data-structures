@@ -110,15 +110,27 @@ public class RedBlackTree {
         current.left = leftChild.right;
         
         leftChild.right = current;
+        leftChild.side = current.side;
         leftChild.parent = current.parent;
         
         current.parent = leftChild;
+        current.side = SIDE_RIGHT;
         
         return leftChild;
     }
     
-    public void rotateRightTest() {
-        this.root = this.rotateRight(this.root);
+    public RBNode rotateLeft(RBNode current) {
+        RBNode rightChild = current.right;
+        current.right = rightChild.left;
+       
+        rightChild.left = current;
+        rightChild.side = current.side;
+        rightChild.parent = current.parent;
+        
+        current.parent = rightChild;
+        current.side = SIDE_LEFT;
+        
+        return rightChild;
     }
     
     public void printTreePreOrder() {
