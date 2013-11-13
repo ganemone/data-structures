@@ -1,4 +1,3 @@
-
 /* 
  * Properties: 
  *  1. A node is either red or black.
@@ -95,27 +94,31 @@ public class RedBlackTree {
             }
         }
     }
+
     private void checkInsertCases(RBNode current) {
-        if(this.checkInsertCaseOne(current)) {
-            
-        }
-        else if(this.checkInsertCaseTwo(current)) {
-            
-        }
-        else if(this.checkInsertCaseThree(current)) {
-            
-        }
-        else if(this.checkInsertCaseFour(current)) {
-            
-        }
-        else if(this.checkInsertCaseFive(current)) {
-            
+        boolean finished = false;
+        while (!finished) {
+            if (this.checkInsertCaseOne(current)) {
+                current.paintBlack();
+                finished = true;
+            } else if (this.checkInsertCaseTwo(current)) {
+                finished = true;
+            } else if (this.checkInsertCaseThree(current)) {
+                current.parent.paintBlack();
+                current.getUncle().paintBlack();
+                current = current.getGrandParent();
+            } else if (this.checkInsertCaseFour(current)) {
+
+            } else if (this.checkInsertCaseFive(current)) {
+
+            }
         }
     }
+
     private boolean checkInsertCaseOne(RBNode current) {
         return (this.root == current);
     }
-    
+
     private boolean checkInsertCaseTwo(RBNode current) {
         return current.parent.isBlack();
     }
@@ -123,52 +126,53 @@ public class RedBlackTree {
     private boolean checkInsertCaseThree(RBNode current) {
         return (current.parent.isRed() && current.getUncle().isRed());
     }
-    
+
     private boolean checkInsertCaseFour(RBNode current) {
         return (current.parent.isRed() && current.getUncle().isBlack() && current.isRightChild() && current.parent.isLeftChild());
     }
-    
+
     private boolean checkInsertCaseFive(RBNode current) {
         return (current.parent.isRed() && current.getUncle().isBlack() && current.isLeftChild() && current.parent.isLeftChild());
     }
+
     private boolean isEmpty() {
         return (this.root == null);
     }
-    
+
     public void printTree() {
         this.root.printNodes();
     }
-    
+
     public RBNode rotateRight(RBNode current) {
         RBNode leftChild = current.left;
         current.left = leftChild.right;
-        
+
         leftChild.right = current;
         leftChild.side = current.side;
         leftChild.parent = current.parent;
-        
+
         current.parent = leftChild;
         current.side = SIDE_RIGHT;
-        
+
         return leftChild;
     }
-    
+
     public RBNode rotateLeft(RBNode current) {
         RBNode rightChild = current.right;
         current.right = rightChild.left;
-       
+
         rightChild.left = current;
         rightChild.side = current.side;
         rightChild.parent = current.parent;
-        
+
         current.parent = rightChild;
         current.side = SIDE_LEFT;
-        
+
         return rightChild;
     }
-    
+
     public void printTreePreOrder() {
         this.root.printPreOrder();
     }
-    
+
 }

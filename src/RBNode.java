@@ -23,6 +23,12 @@ public class RBNode implements Comparable<Object> {
 		return ((Comparable<Object>)this.data).compareTo(data);
 	}
 	
+	public void paintBlack() {
+	    this.color = RedBlackTree.COLOR_BLACK;
+	}
+	public void paintRed() {
+	    this.color = RedBlackTree.COLOR_RED;
+	}
 	public boolean isLeftChild() {
 		return (this.side == RedBlackTree.SIDE_LEFT);
 	}
