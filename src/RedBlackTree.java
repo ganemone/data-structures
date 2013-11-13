@@ -99,21 +99,28 @@ public class RedBlackTree {
         boolean finished = false;
         while (!finished) {
             if (this.checkInsertCaseOne(current)) {
+                System.out.println("Reached Case One");
                 current.paintBlack();
                 finished = true;
             } else if (this.checkInsertCaseTwo(current)) {
+                System.out.println("Reached Case Two");
                 finished = true;
             } else if (this.checkInsertCaseThree(current)) {
+                System.out.println("Reached Case Three");
                 current.parent.paintBlack();
                 current.getUncle().paintBlack();
                 current = current.getGrandParent();
             } else if (this.checkInsertCaseFour(current)) {
+                System.out.println("Reached Case Four");
                 RBNode rotateResult = this.rotateLeft(current);
                 if(current == this.root) {
                     this.root = rotateResult;
                 }
             } else if (this.checkInsertCaseFive(current)) {
-
+                System.out.println("Reached Case Five");
+                RBNode rotateResult = this.rotateRight(current.getGrandParent());
+                rotateResult.paintBlack();
+                current.getGrandParent().paintRed();
             }
         }
     }
