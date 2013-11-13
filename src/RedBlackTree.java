@@ -108,7 +108,10 @@ public class RedBlackTree {
                 current.getUncle().paintBlack();
                 current = current.getGrandParent();
             } else if (this.checkInsertCaseFour(current)) {
-
+                RBNode rotateResult = this.rotateLeft(current);
+                if(current == this.root) {
+                    this.root = rotateResult;
+                }
             } else if (this.checkInsertCaseFive(current)) {
 
             }
