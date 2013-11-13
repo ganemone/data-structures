@@ -10,7 +10,12 @@ public class Main {
 		tree.add(2);
 		tree.add(6);
 		
-		tree.printTree();
+		tree.printTreePreOrder();
+		
+		tree.rotateRightTest();
+		System.out.println("-----Rotated------");
+		
+		tree.printTreePreOrder();
 		
 	}
 }

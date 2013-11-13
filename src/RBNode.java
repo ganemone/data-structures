@@ -1,19 +1,21 @@
 
 public class RBNode implements Comparable {
 
-	private Object data;
+	public Object data;
 	public RBNode left;
 	public RBNode right;
-	private String color;
-	private String side;
-	private RBNode parent;
+	public String color;
+	public String side;
+	public RBNode parent;
 	
 	public RBNode(Object data, RBNode parent, RBNode left, RBNode right, String color, String side) {
 		this.data = data;
+		this.parent = parent;
 		this.left = left;
 		this.right = right;
 		this.color = color;
 		this.side = side;
+		
 	}
 
 	@SuppressWarnings("unchecked")
@@ -58,33 +60,13 @@ public class RBNode implements Comparable {
 	    }
 	}
 	
-    public void rotateRight() {
-        
-        RBNode oldParent = this.parent;
-        RBNode oldRight = this.right;
-        RBNode oldParentParent = oldParent.parent;
-        
-        this.right = oldParent;
-        this.parent = oldParentParent;
-        this.side = oldParent.side;
-        
-        if(this.parent != null) {
-            if(this.side == BinaryTree.SIDE_LEFT) {
-                this.parent.left = this;
-            }
-            else if(this.side == BinaryTree.SIDE_RIGHT) {
-                this.parent.right = this;
-            }
+	public void printPreOrder() {
+	    System.out.println(this.data);
+	    if(this.left != null) {
+            this.left.printPreOrder();
         }
-        
-        oldParent.left = oldRight;
-        oldParent.parent = this;
-        oldParent.side = BinaryTree.SIDE_RIGHT;
-        oldParent.left.side = BinaryTree.SIDE_LEFT;
-        
-    }
-    
-    public void rotateLeft() {
-        
-    }
+	    if(this.right != null) {
+            this.right.printPreOrder();
+        }
+	}
 }

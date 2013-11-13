@@ -69,7 +69,7 @@ public class RedBlackTree {
     public final static String SIDE_LEFT = "left";
     public final static String SIDE_RIGHT = "right";
 
-    private RBNode root;
+    public RBNode root;
 
     public void add(Object data) {
         if (this.isEmpty()) {
@@ -103,6 +103,26 @@ public class RedBlackTree {
     
     public void printTree() {
         this.root.printNodes();
+    }
+    
+    public RBNode rotateRight(RBNode current) {
+        RBNode leftChild = current.left;
+        current.left = leftChild.right;
+        
+        leftChild.right = current;
+        leftChild.parent = current.parent;
+        
+        current.parent = leftChild;
+        
+        return leftChild;
+    }
+    
+    public void rotateRightTest() {
+        this.root = this.rotateRight(this.root);
+    }
+    
+    public void printTreePreOrder() {
+        this.root.printPreOrder();
     }
     
 }
