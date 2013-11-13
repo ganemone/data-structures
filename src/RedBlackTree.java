@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 
 /* 
  * Properties: 
@@ -96,7 +95,42 @@ public class RedBlackTree {
             }
         }
     }
+    private void checkInsertCases(RBNode current) {
+        if(this.checkInsertCaseOne(current)) {
+            
+        }
+        else if(this.checkInsertCaseTwo(current)) {
+            
+        }
+        else if(this.checkInsertCaseThree(current)) {
+            
+        }
+        else if(this.checkInsertCaseFour(current)) {
+            
+        }
+        else if(this.checkInsertCaseFive(current)) {
+            
+        }
+    }
+    private boolean checkInsertCaseOne(RBNode current) {
+        return (this.root == current);
+    }
+    
+    private boolean checkInsertCaseTwo(RBNode current) {
+        return current.parent.isBlack();
+    }
 
+    private boolean checkInsertCaseThree(RBNode current) {
+        return (current.parent.isRed() && current.getUncle().isRed());
+    }
+    
+    private boolean checkInsertCaseFour(RBNode current) {
+        return (current.parent.isRed() && current.getUncle().isBlack() && current.isRightChild() && current.parent.isLeftChild());
+    }
+    
+    private boolean checkInsertCaseFive(RBNode current) {
+        return (current.parent.isRed() && current.getUncle().isBlack() && current.isLeftChild() && current.parent.isLeftChild());
+    }
     private boolean isEmpty() {
         return (this.root == null);
     }

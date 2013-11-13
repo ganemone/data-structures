@@ -1,5 +1,5 @@
 
-public class RBNode implements Comparable {
+public class RBNode implements Comparable<Object> {
 
 	public Object data;
 	public RBNode left;
@@ -18,7 +18,6 @@ public class RBNode implements Comparable {
 		
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public int compareTo(Object data) {
 		return ((Comparable<Object>)this.data).compareTo(data);
@@ -68,5 +67,23 @@ public class RBNode implements Comparable {
 	    if(this.right != null) {
             this.right.printPreOrder();
         }
+	}
+	
+	public RBNode getGrandParent() {
+	    return this.parent.parent;
+	}
+	
+	public RBNode getUncle() {
+	    return this.parent.getSibling();
+	}
+	
+	public RBNode getSibling() {
+	    if(this.side == RedBlackTree.SIDE_LEFT) {
+	        return this.parent.right;
+	    }
+	    else if(this.side == RedBlackTree.SIDE_RIGHT) {
+	        return this.parent.left;
+	    }
+	    return null;
 	}
 }
