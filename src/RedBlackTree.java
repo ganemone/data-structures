@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /* 
  * Properties: 
  *  1. A node is either red or black.
@@ -74,27 +76,33 @@ public class RedBlackTree {
             this.root = new RBNode(data, null, null, null, COLOR_BLACK, null);
         } else {
             RBNode node = root;
+            RBNode nodeToInsert = new RBNode(data, null, null, null, COLOR_RED, null);
             boolean finished = false;
             while (!finished) {
                 if (node.compareTo(data) > 0) {
                     if (node.left == null) {
-                        node.left = new RBNode(data, node, null, null, COLOR_RED, SIDE_LEFT);
+                        nodeToInsert.side = SIDE_LEFT;
+                        nodeToInsert.parent = node;
+                        node.left = nodeToInsert;
                         finished = true;
                     } else {
                         node = node.left;
                     }
                 } else {
                     if (node.right == null) {
-                        node.right = new RBNode(data, node, null, null, COLOR_RED, SIDE_RIGHT);
+                        nodeToInsert.side = SIDE_RIGHT;
+                        nodeToInsert.parent = node;
+                        node.right = nodeToInsert;
                         finished = true;
                     } else {
                         node = node.right;
                     }
                 }
             }
+            checkInsertCases(nodeToInsert);
         }
     }
-
+    /*
     private void checkInsertCases(RBNode current) {
         boolean finished = false;
         while (!finished) {
@@ -106,17 +114,19 @@ public class RedBlackTree {
                 System.out.println("Reached Case Two");
                 finished = true;
             } else if (this.checkInsertCaseThree(current)) {
+                System.out.println("Reached Insert Case Three...");
+            } else if (this.checkInsertCaseFour(current)) {
                 System.out.println("Reached Case Three");
                 current.parent.paintBlack();
                 current.getUncle().paintBlack();
                 current = current.getGrandParent();
-            } else if (this.checkInsertCaseFour(current)) {
+            } else if (this.checkInsertCaseFive(current)) {
                 System.out.println("Reached Case Four");
                 RBNode rotateResult = this.rotateLeft(current);
                 if(current == this.root) {
                     this.root = rotateResult;
                 }
-            } else if (this.checkInsertCaseFive(current)) {
+            } else if (this.checkInsertCaseSix(current)) {
                 System.out.println("Reached Case Five");
                 RBNode rotateResult = this.rotateRight(current.getGrandParent());
                 rotateResult.paintBlack();
@@ -132,19 +142,23 @@ public class RedBlackTree {
     private boolean checkInsertCaseTwo(RBNode current) {
         return current.parent.isBlack();
     }
-
+    
     private boolean checkInsertCaseThree(RBNode current) {
+        return (current.parent.isRed() && current.parent.side == current.side);
+    }
+    
+    private boolean checkInsertCaseFour(RBNode current) {
         return (current.parent.isRed() && current.getUncle().isRed());
     }
 
-    private boolean checkInsertCaseFour(RBNode current) {
+    private boolean checkInsertCaseFive(RBNode current) {
         return (current.parent.isRed() && current.getUncle().isBlack() && current.isRightChild() && current.parent.isLeftChild());
     }
 
-    private boolean checkInsertCaseFive(RBNode current) {
+    private boolean checkInsertCaseSix(RBNode current) {
         return (current.parent.isRed() && current.getUncle().isBlack() && current.isLeftChild() && current.parent.isLeftChild());
     }
-
+    */
     private boolean isEmpty() {
         return (this.root == null);
     }
@@ -156,11 +170,28 @@ public class RedBlackTree {
     public RBNode rotateRight(RBNode current) {
         RBNode leftChild = current.left;
         current.left = leftChild.right;
+        current.left.parent = current;
+        current.left.side = SIDE_LEFT;
 
         leftChild.right = current;
         leftChild.side = current.side;
         leftChild.parent = current.parent;
-
+        
+        // Moves up the tree and updates relationships
+        RBNode parent = current.parent; 
+        RBNode child = leftChild;
+        while(parent != null) {
+            if(child.side == SIDE_LEFT) {
+                parent.left = child;
+            }
+            else {
+                parent.right = child;
+            }
+            child = parent; 
+            parent = parent.parent;
+        }
+        this.root = child;
+        
         current.parent = leftChild;
         current.side = SIDE_RIGHT;
 
@@ -170,10 +201,27 @@ public class RedBlackTree {
     public RBNode rotateLeft(RBNode current) {
         RBNode rightChild = current.right;
         current.right = rightChild.left;
-
+        current.right.parent = current;
+        current.right.side = SIDE_RIGHT;
+        
         rightChild.left = current;
         rightChild.side = current.side;
         rightChild.parent = current.parent;
+        
+        // Moves up the tree and updates relationships
+        RBNode parent = current.parent; 
+        RBNode child = rightChild;
+        while(parent != null) {
+            if(child.side == SIDE_LEFT) {
+                parent.left = child;
+            }
+            else {
+                parent.right = child;
+            }
+            child = parent; 
+            parent = parent.parent;
+        }
+        this.root = child;
 
         current.parent = rightChild;
         current.side = SIDE_LEFT;
@@ -183,6 +231,17 @@ public class RedBlackTree {
 
     public void printTreePreOrder() {
         this.root.printPreOrder();
+    }
+    
+    public ArrayList<RBNode> getNodesPreOrder(ArrayList<RBNode> nodes, RBNode current) {
+        if(current == null) {
+            return nodes;
+        }
+        nodes.add(current);
+        this.getNodesPreOrder(nodes, current.left);
+        this.getNodesPreOrder(nodes, current.right);
+        
+        return nodes;
     }
 
 }
