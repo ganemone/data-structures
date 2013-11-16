@@ -365,9 +365,27 @@ public class RedBlackTreeTest {
         tree.add(10);
         tree.add(15);
         tree.add(12);
+        tree.add(11);
         tree.add(13);
         tree.add(17);
         tree.add(8);
+        
+        tree.rightLeftRotation(tree.root.right.left);
+        
+        ArrayList<RBNode> nodesPreOrder = tree.getNodesPreOrder(new ArrayList<RBNode>(), tree.root);
+        int[] arr = new int[7];
+        for (int i = 0; i < nodesPreOrder.size(); i++) {
+            arr[i] = (Integer) nodesPreOrder.get(i).data;
+        }
+        
+        assertArrayEquals(new int[] {12,10,8,11,15,13,17}, arr);
+        assertEquals(12, tree.root);
+        assertEquals(10, tree.root.left.data);
+        assertEquals(15, tree.root.right.data);
+        assertEquals(8, tree.root.left.left.data);
+        assertEquals(11, tree.root.left.right.data);
+        assertEquals(13, tree.root.right.left.data);
+        assertEquals(17, tree.root.right.right.data);
         
     }
     
