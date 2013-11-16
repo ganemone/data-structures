@@ -331,4 +331,44 @@ public class RedBlackTreeTest {
         // I'm convinced
     }
     
+    @Test 
+    public void testLeftRightRotate() {
+        RedBlackTree tree = new RedBlackTree();
+        tree.add(10);
+        tree.add(6);
+        tree.add(2);
+        tree.add(8);
+        tree.add(7);
+        tree.add(9);
+        tree.add(15);
+        tree.add(1);
+        tree.add(3);
+        tree.add(14);
+        tree.add(16);
+        
+        tree.leftRightRotation(tree.root.left.right);
+        
+        ArrayList<RBNode> nodesPreOrder = tree.getNodesPreOrder(new ArrayList<RBNode>(), tree.root);
+        int[] arr = new int[7];
+        for (int i = 0; i < nodesPreOrder.size(); i++) {
+            arr[i] = (Integer) nodesPreOrder.get(i).data;
+        }
+        
+        assertArrayEquals(new int[] {8,6,2,1,3,7,10,9,15,14,16}, arr);
+        assertEquals(8, tree.root.data);
+        
+    }
+    
+    @Test
+    public void testRightLeftRotate() {
+        RedBlackTree tree = new RedBlackTree();
+        tree.add(10);
+        tree.add(15);
+        tree.add(12);
+        tree.add(13);
+        tree.add(17);
+        tree.add(8);
+        
+    }
+    
 }
