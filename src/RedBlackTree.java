@@ -71,9 +71,12 @@ public class RedBlackTree {
 
     public RBNode root;
 
-    public void add(Object data) {
+    public RBNode add(Object data) {
         if (this.isEmpty()) {
-            this.root = new RBNode(data, null, null, null, COLOR_BLACK, null);
+            RBNode rbNode = new RBNode(data, null, null, null, COLOR_BLACK, null);
+            this.root = rbNode;
+            return rbNode;
+            
         } else {
             RBNode node = root;
             RBNode nodeToInsert = new RBNode(data, null, null, null, COLOR_RED, null);
@@ -99,19 +102,21 @@ public class RedBlackTree {
                     }
                 }
             }
-            checkInsertCases(nodeToInsert);
+            return nodeToInsert;
         }
     }
-
+    
+    public void insert(Object data) {
+        this.checkInsertCases(this.add(data));
+    }
+    
     private void checkInsertCases(RBNode current) {
         boolean finished = false;
         while (!finished) {
             System.out.println("Current: " + current.data);
-            System.out.println("Side: " + current.side);
-            System.out.println("Color: " + current.color);
-            System.out.println("Uncle: " + current.getUncle());
-            
-            if (current.parent.isBlack()) {
+            if(current == this.root) {
+                finished = true;
+            } else if (current.parent.isBlack()) {
                 System.out.println("Reached Insert Case 1");
                 finished = true;
             } else if (current.getUncle() == null || current.getUncle().isBlack()) {
@@ -120,7 +125,7 @@ public class RedBlackTree {
                         System.out.println("Reached Insert Case 2");
                         current.parent.paintBlack();
                         current.getGrandParent().paintRed();
-                        this.rotateRight(current.parent);
+                        this.rotateRight(current.getGrandParent());
                         finished = true;
                     } else {
                         System.out.println("Reached Insert Case 3");
@@ -134,7 +139,7 @@ public class RedBlackTree {
                         System.out.println("Reached Insert Case 4");
                         current.getGrandParent().paintRed();
                         current.parent.paintBlack();
-                        this.rotateLeft(current.parent);
+                        this.rotateLeft(current.getGrandParent());
                         finished = true;
                     } else {
                         System.out.println("Reached Insert Case 5");
@@ -277,6 +282,11 @@ public class RedBlackTree {
         }
         b.right = c;
         c.parent = b;
+        
+        if(c == this.root) {
+            this.root = b;
+        }
+        
     }
     
     public void rightLeftRotation(RBNode b) {
@@ -308,6 +318,10 @@ public class RedBlackTree {
         }
         b.left = c;
         c.parent = b;
+        
+        if(c == this.root) {
+            this.root = b;
+        }
     }
 
 }

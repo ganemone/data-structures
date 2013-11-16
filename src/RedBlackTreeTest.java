@@ -349,7 +349,7 @@ public class RedBlackTreeTest {
         tree.leftRightRotation(tree.root.left.right);
         
         ArrayList<RBNode> nodesPreOrder = tree.getNodesPreOrder(new ArrayList<RBNode>(), tree.root);
-        int[] arr = new int[7];
+        int[] arr = new int[11];
         for (int i = 0; i < nodesPreOrder.size(); i++) {
             arr[i] = (Integer) nodesPreOrder.get(i).data;
         }
@@ -379,7 +379,7 @@ public class RedBlackTreeTest {
         }
         
         assertArrayEquals(new int[] {12,10,8,11,15,13,17}, arr);
-        assertEquals(12, tree.root);
+        assertEquals(12, tree.root.data);
         assertEquals(10, tree.root.left.data);
         assertEquals(15, tree.root.right.data);
         assertEquals(8, tree.root.left.left.data);
@@ -388,5 +388,31 @@ public class RedBlackTreeTest {
         assertEquals(17, tree.root.right.right.data);
         
     }
-    
+    @Test
+    public void testRightLeftRotateOutsideRoot() {
+        RedBlackTree tree = new RedBlackTree();
+        tree.add(7);
+        tree.add(5);
+        tree.add(10);
+        tree.add(15);
+        tree.add(12);
+        tree.add(11);
+        tree.add(13);
+        tree.add(17);
+        tree.add(8);
+        
+        tree.rightLeftRotation(tree.root.right.right.left);
+        
+        ArrayList<RBNode> nodesPreOrder = tree.getNodesPreOrder(new ArrayList<RBNode>(), tree.root);
+        int[] arr = new int[9];
+        for (int i = 0; i < nodesPreOrder.size(); i++) {
+            arr[i] = (Integer) nodesPreOrder.get(i).data;
+        }
+        
+        assertArrayEquals(new int[] {7,5,12,10,8,11,15,13,17}, arr);
+        assertEquals(7, tree.root.data);
+        assertEquals(5, tree.root.left.data);
+        assertEquals(12, tree.root.right.data);
+        
+    }
 }

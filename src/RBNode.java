@@ -67,6 +67,8 @@ public class RBNode implements Comparable<Object> {
 	
 	public void printPreOrder() {
 	    System.out.println(this.data);
+	    System.out.println(this.color);
+	    System.out.println(this.side);
 	    if(this.left != null) {
             this.left.printPreOrder();
         }
